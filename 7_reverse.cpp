@@ -1,19 +1,14 @@
 class Solution {
 public:
     int reverse(int x) {
-        /**
-        ret 保存旧的翻转中间值, temp 保存新的翻转过程中间值
-        依次提取 x 的末位加入 temp, 如果发生溢出则通过temp/10 
-        无法得到上一轮的翻转结果 ret
-        **/
-        int ret = 0;
+        int rev = 0;
         while (x != 0) {
-            int temp = ret * 10 + x % 10;
-            if (temp / 10 != ret)
-                return 0;
-            ret = temp;
+            int pop = x % 10;
             x /= 10;
+            if (rev > INT_MAX/10 || (rev == INT_MAX / 10 && pop > 7)) return 0;
+            if (rev < INT_MIN/10 || (rev == INT_MIN / 10 && pop < -8)) return 0;
+            rev = rev * 10 + pop;
         }
-        return ret;
+        return rev;
     }
 };
